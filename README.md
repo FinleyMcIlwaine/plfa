@@ -8,12 +8,12 @@ next      : /Naturals/
 
 # Programming Language Foundations in Agda
 
-My fork of Dr. Philip Wadler and Wen Kokke's book. I plan on working through the entire book in this repository.
-Everything below is the original `README.md` from the upstream.
-
-All I plan on doing is modifying the code holes left to be completed in the book, so all of the directions
-below should still apply. Specifically, I'm editing this stuff in emacs and hosting a copy of the book
+My fork of Dr. Philip Wadler and Wen Kokke's book. I hope to work through the entire book in this repository.
+All I plan on doing is modifying the code holes left to be completed in the book (with perhaps some side-experiments), 
+so all of the directions below should still apply. Specifically, I'm editing this stuff in emacs and hosting a copy of the book
 locally using their `make watch` stuff.
+
+Everything below is the original `README.md` from the upstream.
 
 ### Begin original `README.md`
 
