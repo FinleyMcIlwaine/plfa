@@ -81,7 +81,15 @@ successor of two; and so on.
 Write out `7` in longhand.
 
 ```
--- Your code goes here
+seven : ℕ
+seven =
+  (suc -- 7
+    (suc -- 6
+      (suc -- 5
+        (suc -- 4
+          (suc -- 3
+            (suc -- 2
+              (suc zero))))))) -- 1
 ```
 
 
