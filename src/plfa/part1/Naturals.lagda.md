@@ -438,7 +438,54 @@ other word for evidence, which we will use interchangeably, is _proof_.
 Compute `3 + 4`, writing out your reasoning as a chain of equations, using the equations for `+`.
 
 ```
--- Your code goes here
+_ : 3 + 4 ≡ 7
+_ =
+  begin
+    3 + 4
+  ≡⟨⟩ -- Is shorthand for
+    (suc (suc (suc zero))) + (suc (suc (suc (suc zero))))
+  ≡⟨⟩ -- Inductive case 
+    suc ((suc (suc zero)) + (suc (suc (suc (suc zero)))))
+  ≡⟨⟩ -- Inductive case 
+    suc (suc ((suc zero) + (suc (suc (suc (suc zero))))))
+  ≡⟨⟩ -- Inductive case
+    suc (suc (suc (zero + (suc (suc (suc (suc zero)))))))
+  ≡⟨⟩ -- Base case 
+    suc (suc (suc (suc (suc (suc (suc zero)))))) -- Base case
+  ≡⟨⟩ -- Is longhand for
+    7
+  ∎
+```
+
+```
+_ : 3 + 4 ≡ 7
+_ =
+  begin
+    3 + 4
+  ≡⟨⟩
+    7
+  ∎
+```
+
+```
+_ : 1 + 1 ≡ 2
+_ =
+  begin
+    1 + 1
+  ≡⟨⟩
+    (suc 0) + 1
+  ≡⟨⟩
+    suc (0 + 1)
+  ≡⟨⟩
+    suc 1
+  ≡⟨⟩
+    2
+  ∎
+```
+
+```
+_ : 3 + 4 ≡ 7
+_ = refl
 ```
 
 
@@ -500,7 +547,27 @@ Compute `3 * 4`, writing out your reasoning as a chain of equations, using the e
 (You do not need to step through the evaluation of `+`.)
 
 ```
--- Your code goes here
+_ : 3 * 4 ≡ 12
+_ =
+  begin
+    3 * 4
+  ≡⟨⟩
+    (suc 2) * 4
+  ≡⟨⟩
+    4 + (2 * 4)
+  ≡⟨⟩
+    4 + ((suc 1) * 4)
+  ≡⟨⟩
+    4 + (4 + (1 * 4))
+  ≡⟨⟩
+    4 + (4 + ((suc zero) * 4))
+  ≡⟨⟩
+    4 + (4 + (4 + (0 * 4)))
+  ≡⟨⟩
+    4 + 4 + 4 + 0
+  ≡⟨⟩
+    12
+  ∎
 ```
 
 
@@ -514,9 +581,36 @@ Define exponentiation, which is given by the following equations:
 Check that `3 ^ 4` is `81`.
 
 ```
--- Your code goes here
-```
+_^_ : ℕ → ℕ → ℕ
+m ^ zero = suc zero
+m ^ (suc n) = m * m ^ n
 
+_ : 3 ^ 4 ≡ 81
+_ =
+  begin
+    3 ^ 4
+  ≡⟨⟩
+    3 ^ (suc (suc (suc (suc zero))))
+  ≡⟨⟩
+    3 * 3 ^ (suc (suc (suc zero)))
+  ≡⟨⟩
+    3 * 3 * 3 ^ (suc (suc zero))
+  ≡⟨⟩
+    3 * 3 * 3 * 3 ^ (suc zero)
+  ≡⟨⟩
+    3 * 3 * 3 * 3 * 3 ^ zero
+  ≡⟨⟩
+    3 * 3 * 3 * 3 * (suc zero)
+  ≡⟨⟩
+    3 * 3 * 3 * 3 * 1
+  ≡⟨⟩
+    9 * 3 * 3
+  ≡⟨⟩
+    27 * 3
+  ≡⟨⟩
+    81
+  ∎
+```
 
 
 ## Monus
@@ -579,7 +673,33 @@ _ =
 Compute `5 ∸ 3` and `3 ∸ 5`, writing out your reasoning as a chain of equations.
 
 ```
--- Your code goes here
+_ : 5 ∸ 3 ≡ 2
+_ =
+  begin
+    5 ∸ 3
+  ≡⟨⟩
+    4 ∸ 2
+  ≡⟨⟩
+    3 ∸ 1
+  ≡⟨⟩
+    2 ∸ 0
+  ≡⟨⟩
+    2
+  ∎
+
+_ : 3 ∸ 5 ≡ 0
+_ =
+  begin
+    3 ∸ 5
+  ≡⟨⟩
+    2 ∸ 4
+  ≡⟨⟩
+    1 ∸ 3
+  ≡⟨⟩
+    0 ∸ 2
+  ≡⟨⟩
+    0
+  ∎
 ```
 
 
@@ -926,7 +1046,198 @@ represents a positive natural, and represent zero by `⟨⟩ O`.
 Confirm that these both give the correct answer for zero through four.
 
 ```
--- Your code goes here
+inc : Bin → Bin
+inc ⟨⟩ = ⟨⟩ I
+inc (b O) = b I
+inc (b I) = (inc b) O
+
+-- Zero!
+_ : inc (⟨⟩ O) ≡ ⟨⟩ I
+_ =
+  begin
+    inc (⟨⟩ O)
+  ≡⟨⟩
+    ⟨⟩ I
+  ∎
+
+-- One!
+_ : inc (⟨⟩ I) ≡ ⟨⟩ I O
+_ =
+  begin
+    inc (⟨⟩ I)
+  ≡⟨⟩
+    (inc ⟨⟩) O
+  ≡⟨⟩
+    (⟨⟩ I) O
+  ≡⟨⟩
+    ⟨⟩ I O
+  ∎
+
+-- Two!
+_ : inc (⟨⟩ I O) ≡ ⟨⟩ I I
+_ =
+  begin
+    inc (⟨⟩ I O)
+  ≡⟨⟩
+    ⟨⟩ I I
+  ∎
+
+-- Three!
+_ : inc (⟨⟩ I I) ≡ ⟨⟩ I O O
+_ =
+  begin
+    inc (⟨⟩ I I)
+  ≡⟨⟩
+    (inc (⟨⟩ I)) O
+  ≡⟨⟩
+    (inc ⟨⟩) O O
+  ≡⟨⟩
+    ⟨⟩ I O O
+  ∎
+
+-- Four!
+_ : inc (⟨⟩ I O O) ≡ ⟨⟩ I O I
+_ =
+  begin
+    inc (⟨⟩ I O O)
+  ≡⟨⟩
+    ⟨⟩ I O I
+  ∎
+
+-- Natural to Bin
+to : ℕ → Bin
+to 0       = ⟨⟩ O
+to (suc m) = inc (to m)
+
+-- Natural from Bin
+from : Bin → ℕ
+from (⟨⟩)  = 0
+from (b O) = 2 * (from b)
+from (b I) = suc (2 * from b)
+
+-- Testing
+-- 0 to O
+_ : to 0 ≡ ⟨⟩ O
+_ = refl
+
+-- 1 to ⟨⟩ I
+_ : to 1 ≡ ⟨⟩ I
+_ =
+  begin
+    to 1
+  ≡⟨⟩
+    to (suc 0)
+  ≡⟨⟩
+    inc (to 0)
+  ≡⟨⟩
+    inc (⟨⟩ O)
+  ≡⟨⟩
+    ⟨⟩ I
+  ∎
+
+-- 2 to ⟨⟩ I O
+_ : to 2 ≡ ⟨⟩ I O
+_ =
+  begin
+    to 2
+  ≡⟨⟩
+    inc (to 1)
+  ≡⟨⟩
+    inc (inc (to 0))
+  ≡⟨⟩
+    inc (inc (⟨⟩ O))
+  ≡⟨⟩
+    inc (⟨⟩ I)
+  ≡⟨⟩
+    ⟨⟩ I O
+  ∎
+
+-- 3 to ⟨⟩ I I
+_ : to 3 ≡ ⟨⟩ I I
+_ =
+  begin
+    to 3
+  ≡⟨⟩
+    inc (to 2)
+  ≡⟨⟩
+    inc (⟨⟩ I O)
+  ≡⟨⟩
+    ⟨⟩ I I
+  ∎
+
+-- 4 to ⟨⟩ I O O
+_ : to 4 ≡ ⟨⟩ I O O
+_ =
+  begin
+    to 4
+  ≡⟨⟩
+    inc (to 3)
+  ≡⟨⟩
+    inc (⟨⟩ I I)
+  ≡⟨⟩
+    ⟨⟩ I O O
+  ∎
+
+-- ⟨⟩ O to 0
+_ : from (⟨⟩ O) ≡ 0
+_ =
+  begin
+    from (⟨⟩ O)
+  ≡⟨⟩
+    0
+  ∎
+
+-- ⟨⟩ I to 1
+_ : from (⟨⟩ I) ≡ 1
+_ =
+  begin
+    from (⟨⟩ I)
+  ≡⟨⟩
+    suc (2 * from ⟨⟩)
+  ≡⟨⟩
+    suc 0
+  ≡⟨⟩
+    1
+  ∎
+
+-- ⟨⟩ I O to 2
+_ : from (⟨⟩ I O) ≡ 2
+_ =
+  begin
+    from (⟨⟩ I O)
+  ≡⟨⟩
+    2 * from (⟨⟩ I)
+  ≡⟨⟩
+    2 * 1
+  ≡⟨⟩
+    2
+  ∎
+
+-- ⟨⟩ I I to 3
+_ : from (⟨⟩ I I) ≡ 3
+_ =
+  begin
+    from (⟨⟩ I I)
+  ≡⟨⟩
+    suc (2 * from (⟨⟩ I))
+  ≡⟨⟩
+    suc (2 * 1)
+  ≡⟨⟩
+    3
+  ∎
+
+-- ⟨⟩ I O O to 4
+_ : from (⟨⟩ I O O) ≡ 4
+_ =
+  begin
+    from (⟨⟩ I O O)
+  ≡⟨⟩
+    2 * from (⟨⟩ I O)
+  ≡⟨⟩
+    2 * 2
+  ≡⟨⟩
+    4
+  ∎
 ```
 
 
